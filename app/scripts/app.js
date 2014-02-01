@@ -12,6 +12,10 @@ angular.module('nbsdemoApp', [
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
+      .when('/artist/:artistId', {
+        templateUrl: 'views/main.html',
+        controller: 'ArtistCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

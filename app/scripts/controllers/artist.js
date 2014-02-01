@@ -1,6 +1,6 @@
 'use strict';
 
 angular.module('nbsdemoApp')
-  .controller('MainCtrl', function ($scope) {
+  .controller('ArtistCtrl', function ($scope) {
     
   });
