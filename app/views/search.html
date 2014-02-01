@@ -1,5 +1,12 @@
-<form ng-submit="search()" ng-controller="SearchCtrl">
+<form ng-submit="search()">
 	<span>Artist:</span>
 	<input type="text" ng-model="searchText" size="50">
 	<input class="btn btn-primary" type="submit" value="Search">
 </form>
+
+<div ng-if="result">
+	<div>Search results:</div>
+	<ul>
+		<li ng-repeat="artist in result.artists"><a href="#/artist/{{artist.name}}">{{artist.name}}</a></li>
+	</ul>
+</div>
