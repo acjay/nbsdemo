@@ -4,10 +4,11 @@ angular.module('nbsdemoApp')
   .service('Creategraph', function Creategraph(Util) {
     this.go = function generateGraph(data) {
       var margin = {top: 20, right: 20, bottom: 30, left: 50},
+          spacing = 40,
           width = 700 - margin.left - margin.right,
           totalHeight = 700 - margin.top - margin.bottom,
           metricChangeHeight = 500,
-          eventHeight = totalHeight - metricChangeHeight;
+          eventHeight = totalHeight - metricChangeHeight - spacing;
 
       // Convert day indices to d3-compliant dates
       data.forEach(function (d) {
@@ -25,7 +26,7 @@ angular.module('nbsdemoApp')
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
       this.makeMetricChangeGraph('Page Likes Change', data, svg, x, 0, metricChangeHeight, width);
-      this.makeEventGraph(data, svg, x, metricChangeHeight, eventHeight, width);
+      this.makeEventGraph(data, svg, x, metricChangeHeight + spacing, eventHeight, width);
     };
 
     this.makeMetricChangeGraph = function (dataKey, data, svg, x, top, height, width) {
@@ -35,7 +36,7 @@ angular.module('nbsdemoApp')
       var keyIdSuffix = '-' + dataKey.toLowerCase().replace(/ /g, '-');
 
       var y = d3.scale.linear()
-          .range([height, top])
+          .range([top + height, top])
           .domain([d3.min(data, function(d) { return d[dataKey]; }), d3.max(data, function(d) { return d[dataKey]; })]);
 
       var xAxis = d3.svg.axis()
@@ -98,7 +99,8 @@ angular.module('nbsdemoApp')
           .call(yAxis)
         .append("text")
           .attr("transform", "rotate(-90)")
-          .attr("y", 6)
+          .attr("x", -170)
+          .attr("y", -45)
           .attr("dy", ".71em")
           .style("text-anchor", "end")
           .text("Daily " + dataKey);
@@ -113,12 +115,44 @@ angular.module('nbsdemoApp')
         .map(function (entry) { 
           // If there are any events, return [day, event] for each of them
           return entry[1].events 
-            ? entry[1].events.map(function (event) { return [entry[1].day, event]; }) 
+            ? entry[1].events.map(function (event, index) { return [entry[1].day, index + 1, event]; }) 
             : []; 
           })
         .flatten(true) // combine all daily event sets
-        .flatten(true) // combine all sets into one flat list
         .value();
+
+      var eventsMax = d3.max(data, function(d) { return d.events ? d.events.length : 0; });
+
+      var y = d3.scale.linear()
+        .range([top, top + height])
+        .domain([1, eventsMax]);
+
+      var color = d3.scale.category10();
+
+      var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .ticks(Math.min(eventsMax, 10));
+
+      svg.append("g")
+          .attr("class", "y axis")
+          .call(yAxis)
+        .append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("x", -20 + -top)
+          .attr("y", -45)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("Artist Events");
+
+      svg.selectAll(".dot")
+          .data(allEvents)
+        .enter().append("circle")
+          .attr("class", "dot")
+          .attr("r", 3.5)
+          .attr("cx", function(d) { return x(d[0]); })
+          .attr("cy", function(d) { return y(d[1]); })
+          .style("fill", function(d) { return color(d[2].event_type_id); });
     };
 
   });
