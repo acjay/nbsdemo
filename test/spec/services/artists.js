@@ -11,8 +11,4 @@ describe('Service: Artists', function () {
     Artists = _Artists_;
   }));
 
-  it('should do something', function () {
-    expect(!!Artists).toBe(true);
-  });
-
 });

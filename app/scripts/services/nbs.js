@@ -11,6 +11,17 @@ angular.module('nbsdemoApp')
 				params: {
 					limit: 15
 				}
+			},
+			events: {
+				method: 'GET',
+				url: 'https://api.nextbigsound.com/events/v1/artists/:artistId'
+			},
+			metrics: {
+				method: 'GET',
+				url: 'https://api.nextbigsound.com/metrics/v1/entityData',
+				params: {
+					metrics: '11,28'
+				}
 			}
 		});
   });

@@ -13,10 +13,13 @@
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/sass-bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap/docs/assets/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/angular-bootstrap-datepicker/dist/angular-bootstrap-datepicker.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,app}) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/graph.css">
     <!-- endbuild -->
   </head>
   <body ng-app="nbsdemoApp">
@@ -43,11 +46,13 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/d3/d3.js"></script>
     <script src="bower_components/lodash/dist/lodash.compat.js"></script>
+    <script src="bower_components/bootstrap/docs/assets/js/bootstrap.js"></script>
+    <script src="bower_components/angular-bootstrap-datepicker/dist/angular-bootstrap-datepicker.js"></script>
+    <script src="bower_components/angular-bootstrap-datepicker/dist/angular-bootstrap-datepicker.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
     <script src="bower_components/angular-mocks/angular-mocks.js"></script>
-    <script src="bower_components/lodash/dist/lodash.js"></script>
     <script src="scripts/mockData.js"></script>
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
@@ -58,6 +63,9 @@
         <script src="scripts/services/nbs.js"></script>
         <script src="scripts/directives/artistData.js"></script>
         <script src="scripts/services/artists.js"></script>
+        <script src="scripts/services/util.js"></script>
+        <script src="scripts/directives/impactGraph.js"></script>
+        <script src="scripts/services/createGraph.js"></script>
         <!-- endbuild -->
 </body>
 </html>

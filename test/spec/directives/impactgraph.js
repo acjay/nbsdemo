@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Directive: artistData', function () {
+describe('Directive: impactGraph', function () {
 
   // load the directive's module
   beforeEach(module('nbsdemoApp'));

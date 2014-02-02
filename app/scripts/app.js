@@ -5,7 +5,8 @@ angular.module('nbsdemoApp', [
   'ngResource',
   'ngSanitize',
   'ngRoute',
-  'ngMockE2E'
+  'ngMockE2E',
+  'ng-bootstrap-datepicker'
 ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -25,5 +26,7 @@ angular.module('nbsdemoApp', [
   })
   .run(function ($httpBackend) {
     $httpBackend.whenGET(/https:\/\/api\.nextbigsound\.com\/search\/v1\/artists/).respond(window.mockData.searchResponse);
+    $httpBackend.whenGET(/https:\/\/api\.nextbigsound\.com\/events\/v1\/artists/).respond(window.mockData.eventsResponse);
+    $httpBackend.whenGET(/https:\/\/api\.nextbigsound\.com\/metrics\/v1/).respond(window.mockData.metricsResponse);
     $httpBackend.whenGET(/.*/).passThrough();
   });
