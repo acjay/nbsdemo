@@ -17,6 +17,7 @@ angular.module('nbsdemoApp')
 
 				$scope.endDate = '2013-09-01';
 
+				// used to trigger (re)loading of impact graph
 				$scope.dataLoadCounter = {count: 0};
 
 				$scope.loadData = function () {

@@ -1,6 +1,5 @@
-<div>Viewing data for {{currentArtist.name}}</div>
-
 <form class="form-inline">
+	<span>Select date range: </span>
 	<input id="startDate" type="text" data-ng-datepicker data-ng-options="datepickerOptions" data-ng-model="startDate">
 	<input id="endDate" type="text" data-ng-datepicker data-ng-options="datepickerOptions" data-ng-model="endDate">
 	<button class="btn" ng-click="loadData()">Load data</button>

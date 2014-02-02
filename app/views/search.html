@@ -1,13 +1,14 @@
+<div class="search-box">
+	<label for="searchText">Artist:</label>
+	<div class="input-append">
+		<input type="text" name="searchText" ng-model="searchText" class="span-2">
+		<button class="btn" ng-click="search()">Search</button>
+	</div>
 
-<label for="searchText">Artist:</label>
-<div class="input-append">
-	<input type="text" name="searchText" ng-model="searchText" class="span-2">
-	<button class="btn" ng-click="search()">Search</button>
-</div>
-
-<div ng-if="result">
-	<div>Search results:</div>
-	<ul>
-		<li ng-repeat="artist in result.artists"><a href="#/artist/{{artist.name}}">{{artist.name}}</a></li>
-	</ul>
+	<div ng-if="result">
+		<div>Search results:</div>
+		<ul>
+			<li ng-repeat="artist in result.artists"><a href="#/artist/{{artist.name}}">{{artist.name}}</a></li>
+		</ul>
+	</div>
 </div>
