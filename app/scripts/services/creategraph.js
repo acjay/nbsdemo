@@ -18,14 +18,18 @@ angular.module('nbsdemoApp')
         d.date = d3.time.format("%Y-%m-%dT%H:%M:%S.%LZ").parse(Util.daysToDate(d.day).toISOString());
       });
 
+      // Create shared time scale used by both graphics
       var x = d3.time.scale()
           .range([0, width])
           .domain(d3.extent(data, function(d) { return d.date; }));
 
       var container = d3.select("#artist-visualization")
 
+      // Clear out any old graphics (would be better to save ones that don't
+      // need redoing)
       container.selectAll("*").remove();
 
+      // Create graphics workspace
       var svg = container.append("svg")
           .attr("width", width + margin.left + margin.right)
           .attr("height", totalHeight + margin.top + margin.bottom)
@@ -56,6 +60,8 @@ angular.module('nbsdemoApp')
       var yAxis = d3.svg.axis()
           .scale(y)
           .orient("left");
+
+      // Create paths for positive and negative components of the metric change
 
       var positiveArea = d3.svg.area(data)
           .x(function (d) { return x(d.date); })
@@ -171,7 +177,7 @@ angular.module('nbsdemoApp')
           .attr("cy", function(d) { return y(d[1]); })
           .style("fill", function(d) { return eventTypeColor(d[2].event_type_id); });
 
-
+      // Create and display legend
       var legend = d3.select("#artist-visualization").append("div")
           .classed({'event-legend': true}),
         legendHeader = legend.append('span')

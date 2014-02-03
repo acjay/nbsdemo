@@ -67,18 +67,28 @@ angular.module('nbsdemoApp')
       templateUrl: 'views/impactgraph.html',
       restrict: 'E',
       controller: function ($scope) {
-        var chartInfo = dailyActivity($scope.startDate, $scope.endDate, $scope.currentArtistEvents, $scope.currentArtistMetrics, $scope.currentArtist.id); 
+        $scope.$watch('$parent.currentArtistData', function (currentArtistData) {
+          $scope.chartInfo = dailyActivity($scope.startDate, $scope.endDate, $scope.currentArtistData.events, $scope.currentArtistData.metrics, $scope.currentArtist.id);
 
-        $scope.metricTypes = _.pairs(chartInfo.metricMetadata);
+          $scope.metricTypes = _.pairs($scope.chartInfo.metricMetadata);
 
-        // Default to whatever the first metric is
-        $scope.selectedMetric = $scope.metricTypes[0][0];
+          // Default to whatever the first metric is
+          if (!$scope.selectedMetric) { $scope.selectedMetric = $scope.metricTypes[0][0] };
 
-        // Redo the graph whenever a new metric is selected. This will also 
-        // kick off the first rendering when the checkbox gets selected on the
-        // first render
+          // Trigger a re-render
+          $scope.renderTrigger = {};
+        });
+
+        // Redo the graph whenever a new metric is selected
         $scope.$watch('selectedMetric', function (selectedMetric) {
-          Creategraph.go(chartInfo, selectedMetric);          
+          // Assign a new reference to trigger a re-render
+          $scope.renderTrigger = {};
+        });
+
+        // Listen on whenever a new reference is assigned to renderTrigger
+        $scope.$watch('renderTrigger', function () {
+          console.log('Graph render');
+          Creategraph.go($scope.chartInfo, $scope.selectedMetric);
         });
       }
     };

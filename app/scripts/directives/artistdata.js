@@ -18,7 +18,7 @@ angular.module('nbsdemoApp')
 				$scope.endDate = '2013-09-01';
 
 				// used to trigger (re)loading of impact graph
-				$scope.dataLoadCounter = {count: 0};
+				$scope.dataLoaded = false;
 
 				$scope.loading = false;
 
@@ -36,9 +36,13 @@ angular.module('nbsdemoApp')
 						}).$promise;
 
 					$q.all([currentArtistEvents, currentArtistMetrics]).then(function (results) {
-						$scope.dataLoadCounter.count++;
-						$scope.currentArtistEvents = results[0];
-						$scope.currentArtistMetrics = results[1];
+						console.log('New results loaded');
+
+						$scope.dataLoaded = true;
+						$scope.currentArtistData = {
+							events: results[0],
+							metrics: results[1]
+						};
 						$scope.loading = false;
 					});
 
