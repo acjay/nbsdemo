@@ -19,7 +19,7 @@ angular.module('nbsdemoApp')
     	if (this.cache[artistName]) {
     		$rootScope.currentArtist = this.cache[artistName];
     	} else {
-    		Nbs.search(artistName, function (result) {
+    		Nbs.search({query: artistName}, function (result) {
     			_this.addArtists(result.artists);
     			$rootScope.currentArtist = _this.cache[artistName];
     		});

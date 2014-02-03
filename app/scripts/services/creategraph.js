@@ -2,7 +2,7 @@
 
 angular.module('nbsdemoApp')
   .service('Creategraph', function Creategraph(Util) {
-    this.go = function generateGraph(info) {
+    this.go = function generateGraph(info, selectedMetric) {
       var data = info.data,
         metricMetadata = info.metricMetadata,
         eventMetadata = info.eventMetadata,
@@ -15,20 +15,26 @@ angular.module('nbsdemoApp')
 
       // Convert day indices to d3-compliant dates
       data.forEach(function (d) {
-        d.day = d3.time.format("%Y-%m-%dT%H:%M:%S.%LZ").parse(Util.daysToDate(d.day).toISOString());
+        d.date = d3.time.format("%Y-%m-%dT%H:%M:%S.%LZ").parse(Util.daysToDate(d.day).toISOString());
       });
 
       var x = d3.time.scale()
           .range([0, width])
-          .domain(d3.extent(data, function(d) { return d.day; }));
+          .domain(d3.extent(data, function(d) { return d.date; }));
 
-      var svg = d3.select("#artist-visualization").append("svg")
+      var container = d3.select("#artist-visualization")
+
+      container.selectAll("*").remove();
+
+      var svg = container.append("svg")
           .attr("width", width + margin.left + margin.right)
           .attr("height", totalHeight + margin.top + margin.bottom)
         .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-      this.makeMetricChangeGraph('Page Likes Change', data, metricMetadata, svg, x, 0, metricChangeHeight, width);
+      var metricName = info.metricMetadata[selectedMetric].name_ + ' Change';
+
+      this.makeMetricChangeGraph(metricName, data, metricMetadata, svg, x, 0, metricChangeHeight, width);
       this.makeEventGraph(data, eventMetadata, svg, x, metricChangeHeight + spacing, eventHeight, width);
     };
 
@@ -52,12 +58,12 @@ angular.module('nbsdemoApp')
           .orient("left");
 
       var positiveArea = d3.svg.area(data)
-          .x(function (d) { return x(d.day); })
+          .x(function (d) { return x(d.date); })
           .y0(function () { return y(0); })
           .y1(function (d) { return y(d[dataKey]); });
 
       var negativeArea = d3.svg.area(data)
-          .x(function (d) { return x(d.day); })
+          .x(function (d) { return x(d.date); })
           .y0(function (d) { return y(d[dataKey]); })
           .y1(function () { return y(0); });
 
@@ -119,7 +125,7 @@ angular.module('nbsdemoApp')
         .map(function (entry) { 
           // If there are any events, return [day, event] for each of them
           return entry[1].events 
-            ? entry[1].events.map(function (event, index) { return [entry[1].day, index + 1, event]; }) 
+            ? entry[1].events.map(function (event, index) { return [entry[1].date, index + 1, event]; }) 
             : []; 
           })
         .flatten(true) // combine all daily event sets

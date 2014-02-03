@@ -1,9 +1,9 @@
-<div>
+<form>
 	<ul class="inline" >
 		<li ng-repeat="metricType in metricTypes">
-			<input type="radio" name="foo" data-ng-model= "selectedMetric" data-ng-value="{{metricType}}" /> {{metricType[1].name_}}
+			<input type="radio" name="metricType" value="{{metricType[0]}}" ng-model="$parent.selectedMetric" ng-checked="selectedMetric === metricType[0]"> {{metricType[1].name_}}
 		</li>
 	</ul>
-</div>
+</form>
 <div id="artist-visualization"></div>
 

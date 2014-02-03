@@ -71,7 +71,15 @@ angular.module('nbsdemoApp')
 
         $scope.metricTypes = _.pairs(chartInfo.metricMetadata);
 
-        Creategraph.go(chartInfo);
+        // Default to whatever the first metric is
+        $scope.selectedMetric = $scope.metricTypes[0][0];
+
+        // Redo the graph whenever a new metric is selected. This will also 
+        // kick off the first rendering when the checkbox gets selected on the
+        // first render
+        $scope.$watch('selectedMetric', function (selectedMetric) {
+          Creategraph.go(chartInfo, selectedMetric);          
+        });
       }
     };
   });

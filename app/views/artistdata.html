@@ -1,3 +1,5 @@
+<h2><img ng-if="currentArtist.images" src="{{currentArtist.images[0]['40']}}">{{currentArtist.name}}</h2>
+
 <form class="form-inline">
 	<span>Select date range: </span>
 	<input id="startDate" type="text" data-ng-datepicker data-ng-options="datepickerOptions" data-ng-model="startDate">
