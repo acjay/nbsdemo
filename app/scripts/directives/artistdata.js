@@ -20,6 +20,8 @@ angular.module('nbsdemoApp')
 				// used to trigger (re)loading of impact graph
 				$scope.dataLoadCounter = {count: 0};
 
+				$scope.loading = false;
+
 				$scope.loadData = function () {
 					var artist = $scope.currentArtist,
 							currentArtistEvents = Nbs.events({
@@ -37,7 +39,10 @@ angular.module('nbsdemoApp')
 						$scope.dataLoadCounter.count++;
 						$scope.currentArtistEvents = results[0];
 						$scope.currentArtistMetrics = results[1];
+						$scope.loading = false;
 					});
+
+					$scope.loading = true;
 				};
 
 

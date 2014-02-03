@@ -4,6 +4,7 @@
 		<input type="text" name="searchText" ng-model="searchText" class="span-2">
 		<button class="btn" ng-click="search()">Search</button>
 	</div>
+	<img src="images/loading.gif" ng-if="loading">
 
 	<div ng-if="result">
 		<div>Search results:</div>

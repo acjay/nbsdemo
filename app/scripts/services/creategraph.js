@@ -6,7 +6,7 @@ angular.module('nbsdemoApp')
       var data = info.data,
         metricMetadata = info.metricMetadata,
         eventMetadata = info.eventMetadata,
-        margin = {top: 20, right: 20, bottom: 30, left: 50},
+        margin = {top: 20, right: 20, bottom: 30, left: 100},
         spacing = 40,
         width = 700 - margin.left - margin.right,
         totalHeight = 500 - margin.top - margin.bottom,
@@ -110,7 +110,7 @@ angular.module('nbsdemoApp')
         .append("text")
           .attr("transform", "rotate(-90)")
           .attr("x", -80)
-          .attr("y", -45)
+          .attr("y", -75)
           .attr("dy", ".71em")
           .style("text-anchor", "end")
           .text("Daily " + dataKey);
