@@ -62,7 +62,6 @@ angular.module('nbsdemoApp')
           .orient("left");
 
       // Create paths for positive and negative components of the metric change
-
       var positiveArea = d3.svg.area(data)
           .x(function (d) { return x(d.date); })
           .y0(function () { return y(0); })
@@ -85,6 +84,7 @@ angular.module('nbsdemoApp')
         .attr("d", negativeArea)
         .attr("clip-path", "url(#negative-area" + keyIdSuffix + ")");
 
+      // Add x-axis
       svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
@@ -123,8 +123,6 @@ angular.module('nbsdemoApp')
     };
 
     this.makeEventGraph = function (data, metadata, svg, x, top, height, width) {
-      // Plot event data
-
       // For this, we're better off with a flat list of all events
       var allEvents = _(data)
         .pairs()
@@ -140,18 +138,21 @@ angular.module('nbsdemoApp')
       // Convert typeInfo to an array for color indexing
       var typeInfo = _.pairs(metadata);
 
+      // Set up y-axis
       var eventsMax = d3.max(data, function(d) { return d.events ? d.events.length : 0; });
 
       var y = d3.scale.linear()
         .range([top, top + height])
         .domain([1, eventsMax]);
 
+      // Set up event->color mapping
       var color = d3.scale.category10();
 
       var eventTypeColor = function (eventTypeId) {
         return color(_.findIndex(typeInfo, function (elem) { return elem[0] === '' + eventTypeId; }));
       }
 
+      // Add y-axis and label
       var yAxis = d3.svg.axis()
         .scale(y)
         .orient("left")
@@ -168,6 +169,7 @@ angular.module('nbsdemoApp')
           .style("text-anchor", "end")
           .text("Artist Events");
 
+      // Add event dots
       svg.selectAll(".dot")
           .data(allEvents)
         .enter().append("circle")

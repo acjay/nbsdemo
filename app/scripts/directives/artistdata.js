@@ -13,13 +13,10 @@ angular.module('nbsdemoApp')
 					weekStart: 0
 				};
 
+				// Set initial view state
 				$scope.startDate = '2013-07-13';
-
 				$scope.endDate = '2013-09-01';
-
-				// used to trigger (re)loading of impact graph
 				$scope.dataLoaded = false;
-
 				$scope.loading = false;
 
 				$scope.loadData = function () {
@@ -35,6 +32,9 @@ angular.module('nbsdemoApp')
 							end: $scope.endDate
 						}).$promise;
 
+					// Trigger the loading of the impact graph when all data
+					// has arrived
+					// TODO: add error handling for failure to load
 					$q.all([currentArtistEvents, currentArtistMetrics]).then(function (results) {
 						console.log('New results loaded');
 

@@ -1,18 +1,19 @@
 #artist-visualization {
-	.axis path,
-	.axis line {
-		fill: none;
-		stroke: #000;
-		shape-rendering: crispEdges;
-	}
-	.area-positive {
-		fill: green;
-	}
-	.area-negative {
-		fill: red;
-	}
-	.event-legend-entry {
-		margin-left: 3px;
-		margin-right: 10px;
-	}
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+  .area-positive {
+    fill: green;
+  }
+  .area-negative {
+    fill: red;
+  }
+  .event-legend-entry {
+    display: inline-block;
+    margin-left: 3px;
+    margin-right: 10px;
+  }
 }

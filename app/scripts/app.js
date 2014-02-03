@@ -25,6 +25,7 @@ angular.module('nbsdemoApp', [
       });
   })
   .run(function ($httpBackend) {
+    // Uncomment to run offline with mock data
     // $httpBackend.whenGET(/https:\/\/api\.nextbigsound\.com\/search\/v1\/artists/).respond(window.mockData.searchResponse);
     // $httpBackend.whenGET(/https:\/\/api\.nextbigsound\.com\/events\/v1\/artists/).respond(window.mockData.eventsResponse);
     // $httpBackend.whenGET(/https:\/\/api\.nextbigsound\.com\/metrics\/v1/).respond(window.mockData.metricsResponse);
